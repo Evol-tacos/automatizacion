@@ -1,9 +1,51 @@
-///<reference types="Cypress"</>
+//<reference types="Cypress"</>
+import AddressPage from '../../support/PageObjects/AddressPage'
+import AuthenticationPage from '../../support/PageObjects/AuthenticationPage'
+import AuthenticationPage from '../../support/PageObjects/AuthenticationPage'
+import homepage from '../../support/PageObjects/HomePage'
+import PaymentPage from '../../support/PageObjects/PaymentPage'
+import ShippingPage from '../../support/PageObjects/ShippingPage'
+import ShoppingCartSummary from '../../support/PageObjects/ShoppingCartSummaryPage'
+
 
 //suite de casos
 describe('Primer conjunto de casos de prueba', function(){
+    const addressPage = new AddressPage();
+    const authenticationPage = new AuthenticationPage();
+    const homePage = new homepage();
+    const paymentPage = new PaymentPage();
+    const shippingPage = new ShippingPage();
+    const shoppingCartSummary = new ShoppingCartSummary();
+    
+    
     beforeEach(()=>{
         cy.visit("http://automationpractice.com/index.php")
+    })
+    
+    
+    it('asdasdasd con cucumber', function(){
+        homePage.getSearchBoxInput().type('blouse')
+        homePage.getSearchBoxButton().click();
+        homePage.getAddtoCartElementButton('Blouse').click()
+        homePage.getProceedToCheckoutButton().click();
+
+        shoppingCartSummary.getProductNameText().should('containt.text', 'blouse')
+        shoppingCartSummaryPage.getProductPriceText().should('contain.text', '27.00')
+        shoppingCartSummaryPage.getProceedToCheckoutButton().click()
+        
+        authenticationPage.getEmailAddressInput().type('cypress@ateneaconoimientos.com')
+        authenticationPage.getPasswordInput().type('atenea')
+        authenticationPage.getSignInButton().click()
+
+        addressPage.getProceedToCheckoutButton().click()
+        
+        shippingPage.getTermsOfServiceCheckbox().check().should('be.checked')
+        shippingPage.getProceedToCheckoutButton().click()
+
+        paymeentPage.getPayByBankWireOptionButton().click()
+        PaymentPage.getConfirmMyOrderButton().click()
+        paymentPage.getDescriptionTittleText().should('contain.text', 'Your order on My Store is complete')
+    
     })
     /*
     //caso de prueba 1
@@ -138,7 +180,7 @@ describe('Primer conjunto de casos de prueba', function(){
 <label>
 <input type="checkbox" class="option" data-option="pantalla-tactil" data-slug="con-pantalla-touch"> Con pantalla touch </label>
 </li>*/
-    
+    /*
     it('verificar que los dropmenus de arreglo esten funcionando', function(){
         cy.get('.sf-menu > :nth-child(2) > .sf-with-ul').click()
         cy.get('#selectProductSort').select('In stock').should('have.value','quantity:desc')
@@ -151,5 +193,5 @@ describe('Primer conjunto de casos de prueba', function(){
         cy.get('.product-container:has(.product-name[title="Blouse"])  .ajax_add_to_cart_button').click()
         cy.get('.button-medium[title="Proceed to checkout"]').click()
     
-    })
+    })*/
 })
